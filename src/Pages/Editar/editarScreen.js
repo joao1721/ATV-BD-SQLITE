@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { updateCliente } from '../../db/db';
 
 export default function EditarClienteScreen({ route, navigation }) {
@@ -10,15 +10,8 @@ export default function EditarClienteScreen({ route, navigation }) {
     const [tiposEdit, setTiposEdit] = useState(tipos);
 
     const handleUpdateCliente = () => {
-        console.log("Cliente ID:", cliente.id);
-        console.log("Nome:", nome);
-        console.log("Data de Nascimento:", dataNasc);
-        console.log("Telefones Editados:", telefonesEdit);
-        console.log("Tipos Editados:", tiposEdit);
-        
         updateCliente(cliente.id, nome, dataNasc, telefonesEdit, tiposEdit, rowsAffected => {
             if (rowsAffected > 0) {
-                
                 const clienteAtualizado = { ...cliente, nome, data_nasc: dataNasc };
                 const telefonesAtualizados = telefonesEdit.map((telefone, index) => ({
                     telefone,
@@ -75,8 +68,12 @@ export default function EditarClienteScreen({ route, navigation }) {
                     />
                 </View>
             ))}
-            <Button title="Adicionar Telefone" onPress={handleAddTelefone} />
-            <Button title="Salvar" onPress={handleUpdateCliente} />
+            <TouchableOpacity style={styles.button} onPress={handleAddTelefone}>
+                <Text style={styles.buttonText}>Adicionar Telefone</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleUpdateCliente}>
+                <Text style={styles.buttonText}>Salvar</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -87,17 +84,42 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        backgroundColor: '#000',
     },
     label: {
         fontSize: 18,
         marginBottom: 5,
+        color: '#ffd700',
     },
     input: {
         width: '100%',
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 4,
+        borderColor: '#fff',
+        borderRadius: 8,
         paddingHorizontal: 10,
         marginBottom: 10,
+        color: '#fff',
+    },
+    button: {
+        width: '100%',
+        backgroundColor: '#ffd700',
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
+        textTransform: 'uppercase',
     },
 });

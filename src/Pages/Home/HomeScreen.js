@@ -1,28 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useEffect } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import init from '../../db/db';
@@ -61,6 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: 'black'
   },
   button: {
     width: '80%',
